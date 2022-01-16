@@ -1,37 +1,65 @@
-# Name of workflow
-name: Friendly Invention workflow
+  Skip to content
+    Search or jump to…
+    Pull requests
+    Issues
+    Marketplace
+    Explore
+    
+    @matteo-gildone
+    matteo-gildone
+    /
+    basic-fantasy-rpg
+    Public
+    Code
+    Issues
+    Pull requests
+    Actions
+    Projects
+    Wiki
+    Security
+    Insights
+    Settings
+    basic-fantasy-rpg/.github/workflows/development.yml
+    @matteo-gildone
+    matteo-gildone 🔧 initial setup
+    Latest commit 274c981 on 29 Jun 2021
+    History
+    1 contributor
+    36 lines (33 sloc)  895 Bytes
 
-# When workflow is triggered
-on:
-  push:
-    branches:
-      - main
+  # Name of workflow
+  name: Development workflow
 
-# Jobs to carry out
-jobs:
-  deploy:
-    # Operating system to run job on
-    runs-on: ubuntu-latest
+  # When workflow is triggered
+  on:
+    push:
+      branches:
+        - dev
 
-    # Steps in job
-    steps:
-      # Get code from repo
-      - name: Checkout code
-        uses: actions/checkout@v2
-      # Install NodeJS
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16.x
-          cache: 'yarn'
-      # Run npm install and build on our code
-      - run: yarn install
-      - run: yarn run build --if-present
-      # Deploy to Netlify using our dev secrets
-      - name: Deploy to netlify
-        uses: netlify/actions/cli@master
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        with:
-          args: deploy --dir=build --prod
+  # Jobs to carry out
+  jobs:
+    deploy:
+      # Operating system to run job on
+      runs-on: ubuntu-latest
+
+      # Steps in job
+      steps:
+        # Get code from repo
+        - name: Checkout code
+          uses: actions/checkout@v1
+        # Install NodeJS
+        - name: Use Node.js 16.x
+          uses: actions/setup-node@v1
+          with:
+            node-version: 16.x
+        # Run npm install and build on our code
+        - run: npm install
+        - run: npm run build --if-present
+        # Deploy to Netlify using our dev secrets
+        - name: Deploy to netlify
+          uses: netlify/actions/cli@master
+          env:
+            NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+            NETLIFY_SITE_ID: ${{ secrets.DEV_NETLIFY_SITE_ID }}
+          with:
+            args: deploy --dir=build --prod
