@@ -7,7 +7,7 @@ const initialState = "intro";
 const screenReducer = (state, action) => {
   console.log(action);
   switch (action.type) {
-    case "SET_SCREEN": {
+    case "CHANGE_SCREEN": {
       return action.payload;
     }
     default: {
@@ -17,12 +17,13 @@ const screenReducer = (state, action) => {
 };
 
 const ScreenProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(screenReducer, initialState);
-  const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
+  const [stateScreen, dispatchScreen] = useReducer(screenReducer, initialState);
+  const value = useMemo(
+    () => ({ stateScreen, dispatchScreen }),
+    [stateScreen, dispatchScreen]
+  );
   return (
-    <ScreenContext.Provider value={value}>
-      {children}
-    </ScreenContext.Provider>
+    <ScreenContext.Provider value={value}>{children}</ScreenContext.Provider>
   );
 };
 

@@ -1,15 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
 import { ScreenProvider } from "./context/screen";
+import { CharacterProvider } from "./context/character";
 
 ReactDOM.render(
   <React.StrictMode>
     <ScreenProvider>
-      <App />
+      <CharacterProvider>
+        <App />
+      </CharacterProvider>
     </ScreenProvider>
   </React.StrictMode>,
   document.getElementById("root")
