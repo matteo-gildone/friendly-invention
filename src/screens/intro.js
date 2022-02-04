@@ -8,6 +8,7 @@ const Intro = () => {
 
   return (
     <section data-testid="content" className="my-4 text-center">
+      <h1 className="text-3xl font-bold ">Your journey...</h1>
       <p className="mb-2">You wake up in the deep dark woods.</p>
       <p className="mb-10">Start your journey?</p>
       <Button

@@ -1,4 +1,8 @@
 import React, { createContext, useMemo, useReducer, useContext } from "react";
+import { raceList } from "../data/race";
+import { getRandomFromList } from "../utils/random";
+import { rollAbilities } from "../utils/roll";
+import { getClass } from "../utils/class";
 
 const CharacterContext = createContext();
 
@@ -6,34 +10,21 @@ const characterReducer = (state, action) => {
   console.log(action);
   switch (action.type) {
     case "CREATE_CHARACTER": {
+      const localRace = getRandomFromList(raceList);
+      const localClass = getClass(
+        getRandomFromList(localRace.allowedClasses).toLowerCase()
+      );
       return {
         ...state,
-        race: {
-          name: "Dwarf",
-          allowedClasses: ["Cleric", "Fighter", "Thief"],
-          minAbilities: ["CON"],
-          maxAbilities: ["CHA"],
-          hitDie: "Any",
-          languages: ["Common", "Dwarvish"],
-          description:
-            "Typically about 4' tall, stocky, lifespan of300-400 years. Thick hair and beards.",
-          special: [
-            "Darkvision 60'",
-            "Detect new construction, shifting walls slanting passages, traps w/ 1-2 on d6",
-          ],
-          savingThrows: [4, 4, 4, 3, 4],
-        },
-        klass: {
-          name: "Fighter",
-          minAbilities: [],
-        },
+        race: localRace,
+        klass: localClass,
         abilities: {
-          STR: 10,
-          DEX: 10,
-          CON: 10,
-          INT: 10,
-          WIS: 10,
-          CHA: 10,
+          STR: rollAbilities().value,
+          DEX: rollAbilities().value,
+          CON: rollAbilities().value,
+          INT: rollAbilities().value,
+          WIS: rollAbilities().value,
+          CHA: rollAbilities().value,
         },
       };
     }
